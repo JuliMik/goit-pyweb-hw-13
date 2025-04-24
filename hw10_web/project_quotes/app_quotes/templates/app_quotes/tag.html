@@ -1,0 +1,20 @@
+{% extends "app_quotes/base.html" %}
+
+{% block content %}
+
+<h2> Додати тег </h2>
+<form method="POST" action="{% url 'app_quotes:tag' %}">
+    {% csrf_token %}
+    <div style="padding: 10px">
+        <label>Введіть назву тегу:
+            {{form.name}}
+        </label>
+        <span>{{ form.errors.name }}</span>
+    </div>
+    <div class="grid">
+        <button type="submit">Підтвердити</button>
+        <button type="reset" class="secondary">Скасувати</button>
+    </div>
+</form>
+
+{% endblock %}

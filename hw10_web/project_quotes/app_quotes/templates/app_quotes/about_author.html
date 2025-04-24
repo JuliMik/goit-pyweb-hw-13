@@ -1,0 +1,10 @@
+{% extends "app_quotes/base.html" %}
+
+{% block content %}
+
+<h1>{{author.fullname}}</h1>
+<p>Дата народження: <b>{{author.born_date}}</b></p>
+<p>Країна: <b>{{author.born_location}}</b></p>
+<p>Опис: <b>{{author.description}}</b></p>
+
+{% endblock %}

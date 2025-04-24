@@ -1,0 +1,37 @@
+{% extends "app_quotes/base.html" %} {% block content %}
+
+<nav style="margin-bottom: 20px; border-bottom: 2px solid; padding-left: 30px">
+    {% if user.is_authenticated %}
+    <ul>
+    <li><a href="tag/" role="button"> Додати тег </a></li>
+    <li><a href="author/" role="button"> Додати автора </a></li>
+    <li><a href="quote/" role="button"> Додати цитату </a></li>
+    </ul>
+    <ul>
+        <li>Вітаю, <b>{{ user.username }}!</b></li>
+        <li><a href="{% url 'users:logout' %}" role="button">Вийти</a></li>
+    </ul>
+    {% else %}
+    <ul>
+        <li><a href="{% url 'users:signup' %}" role="button">Зареєстуватись</a></li>
+        <li><a href="{% url 'users:login' %}" role="button">Увійти</a></li>
+    </ul>
+    {% endif %}
+</nav>
+
+
+<div class="row">
+    <div class="quotes_list">
+        {% if quotes_list %}
+            {% for quote in quotes_list %}
+                <div class="quote">
+                    <p>Цитата: {{ quote.quote }}</p>
+                    <p>Автор: <a href="about_author/{{quote.author.id}}">{{ quote.author.fullname }}</a></p>
+                </div>
+                <hr/>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

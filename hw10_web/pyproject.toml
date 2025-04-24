@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "hw10-web"
+version = "0.1.0"
+description = ""
+authors = ["<your_name> <your_email>"]
+readme = "README.md"
+packages = [{include = "hw10_web"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+django = "^4.2"  # Рекомендується використовувати останню стабільну версію Django
+django-environ = "^0.10.0"  # Для зручного керування налаштуваннями
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
