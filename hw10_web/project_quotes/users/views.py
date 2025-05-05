@@ -9,7 +9,7 @@ from django.urls import reverse_lazy
 from .forms import RegisterForm, LoginForm
 
 
-# Функція для реєстрації користувача
+# Функція реєстрації нового користувача
 def signupuser(request):
     if request.user.is_authenticated:
         return redirect(to='app_quotes:main')
@@ -25,7 +25,7 @@ def signupuser(request):
     return render(request, 'users/signup.html', context={"form": RegisterForm()})
 
 
-# Функція для входу користувача
+# Функція входу
 def loginuser(request):
     if request.user.is_authenticated:
         return redirect(to='app_quotes:main')
@@ -42,7 +42,7 @@ def loginuser(request):
     return render(request, 'users/login.html', context={"form": LoginForm()})
 
 
-# Функція для виходу користувача
+# Функція виходу з акаунту
 @login_required
 def logoutuser(request):
     logout(request)
@@ -57,5 +57,3 @@ class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
     success_url = reverse_lazy('users:password_reset_done')
     success_message = "An email with instructions to reset your password has been sent to %(email)s."
     subject_template_name = 'users/password_reset_subject.txt'
-
-

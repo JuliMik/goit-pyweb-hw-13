@@ -5,7 +5,7 @@ from .forms import TagForm, AuthorForm, QuoteForm
 from .models import Quote, Author, Tag
 
 
-# Головна сторінка, яка відображає всі цитати
+# Головна сторінка — виводить всі цитати
 # Create your views here.
 def main(request):
     quotes_list = Quote.objects.all()
@@ -13,7 +13,7 @@ def main(request):
     return render(request, 'app_quotes/index.html', context)
 
 
-# Створення нового автора. Доступно тільки для авторизованих користувачів
+# Додавання автора (тільки для авторизованих користувачів)
 @login_required
 def author(request):
     if request.method == 'POST':
@@ -29,7 +29,7 @@ def author(request):
     return render(request, 'app_quotes/author.html', {'form': AuthorForm()})
 
 
-# Створення нової цитати. Доступно тільки для авторизованих користувачів
+# Додавання цитати (тільки для авторизованих користувачів)
 @login_required
 def quote(request):
     tags = Tag.objects.all()
@@ -46,11 +46,6 @@ def quote(request):
             choice_tags = Tag.objects.filter(name__in=request.POST.getlist('tags'), user=request.user)
             for tag in choice_tags.iterator():
                 new_quote.tags.add(tag)
-            '''
-            for tag in request.POST.getlist('tags'):
-                quote_tag = Tag.objects.filter(name=tag).first()
-                new_quote.tags.add(quote_tag)
-            '''
             return redirect(to='app_quotes:main')
         else:
             return render(request, 'app_quotes/quote.html', {"authors": authors, "tags": tags, 'form': form})
@@ -58,13 +53,13 @@ def quote(request):
     return render(request, 'app_quotes/quote.html', {"authors": authors, "tags": tags, 'form': QuoteForm()})
 
 
-# Деталі про автора за його ідентифікатором
+# Сторінка з інформацією про конкретного автора
 def about_author(request, author_id):
     author = get_object_or_404(Author, pk=author_id)
     return render(request, 'app_quotes/about_author.html', {"author": author})
 
 
-# Створення нового тегу. Доступно тільки для авторизованих користувачів
+# Додавання тегу (тільки для авторизованих користувачів)
 @login_required
 def tag(request):
     if request.method == 'POST':
@@ -80,7 +75,7 @@ def tag(request):
     return render(request, 'app_quotes/tag.html', {'form': TagForm()})
 
 
-# Видалення цитати. Доступно тільки для авторизованих користувачів
+# Видалення цитати за ID (тільки для авторизованих)
 @login_required
 def delete_quote(request, quote_id):
     Quote.objects.get(pk=quote_id).delete()
